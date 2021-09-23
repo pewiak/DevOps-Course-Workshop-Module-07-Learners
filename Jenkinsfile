@@ -12,7 +12,6 @@ pipeline {
                 checkout scm
                 sh 'dotnet build'
                 dir('DotnetTemplate.Web') {
-                    sh 'dotnet run'
                     sh 'dotnet test'
                 }
             }
