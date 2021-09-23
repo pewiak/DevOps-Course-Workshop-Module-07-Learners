@@ -16,12 +16,18 @@ pipeline {
                 }
             }
         }
-        // stage('Build npm') {
-        //     agent { docker { image 'node:14-alpine' }
-        //     }
-        //     steps {
-        //         echo 'Building..'
-        //     }
-        // }
+        stage('Build npm') {
+            agent { docker { image 'node:14-alpine' }
+            }
+            steps {
+                checkout scm
+                dir('DotnetTemplate.Web') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                    sh 'npm run lint'
+                    sh 'npm t'
+                }
+            }
+        }
     }
 }
