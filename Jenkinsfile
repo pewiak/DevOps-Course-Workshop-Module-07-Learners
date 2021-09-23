@@ -5,15 +5,12 @@ pipeline {
     }
 
     stages {
-        stage("Checkout") {
-            agent any
-            checkout scm
-        }
         stage('Build dotnet') {
             agent { docker { image 'mcr.microsoft.com/dotnet/sdk:5.0' }
             }
             steps {
                 echo 'Building..'
+                checkout scm
                 dotnet build
                 dir('DotnetTemplate.Web') {
                     dotnet run
