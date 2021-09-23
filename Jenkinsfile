@@ -9,21 +9,20 @@ pipeline {
             agent { docker { image 'mcr.microsoft.com/dotnet/sdk:5.0' }
             }
             steps {
-                echo 'Building..'
                 checkout scm
-                dotnet build
+                sh 'dotnet build'
                 dir('DotnetTemplate.Web') {
-                    dotnet run
-                    dotnet test
+                    sh 'dotnet run'
+                    sh 'dotnet test'
                 }
             }
         }
-        stage('Build npm') {
-            agent { docker { image 'node:14-alpine' }
-            }
-            steps {
-                echo 'Building..'
-            }
-        }
+        // stage('Build npm') {
+        //     agent { docker { image 'node:14-alpine' }
+        //     }
+        //     steps {
+        //         echo 'Building..'
+        //     }
+        // }
     }
 }
